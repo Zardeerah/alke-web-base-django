@@ -1,0 +1,19 @@
+{
+  "productos": [
+    {
+      "nombre": "Polera Coldplay Tour",
+      "precio": 25000,
+      "imagen": "web/images/productos/polera de hombre.webp"
+    },
+    {
+      "nombre": "Polera Coldplay Negra",
+      "precio": 22000,
+      "imagen": "web/images/productos/polera de hombre 2.webp"
+    },
+    {
+      "nombre": "Poleron Coldplay",
+      "precio": 35000,
+      "imagen": "web/images/productos/poleron.avif"
+    }
+  ]
+}
