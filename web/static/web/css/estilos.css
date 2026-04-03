@@ -13,6 +13,26 @@ body {
   text-align: center;
   padding: 80px 20px;
   color: white;
+
+  background: linear-gradient(270deg, #ff0080, #7928ca, #2afadf, #00f260);
+  background-size: 800% 800%;
+
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.bg-light {
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d) !important;
 }
 
 /* TARJETAS */
@@ -41,4 +61,127 @@ h2 {
   margin-top: 40px;
   margin-bottom: 30px;
   color: white;
+}
+/* Contenedor */
+.carrito-container {
+  max-width: 600px;
+  margin: auto;
+}
+
+/* Título */
+h2 {
+  text-align: center;
+}
+
+/* Tarjetas */
+.carrito-item {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Info producto */
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nombre {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.precio {
+  color: #666;
+}
+
+.cantidad {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Botón eliminar */
+.eliminar {
+  background: #ff4d4d;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.eliminar:hover {
+  background: #cc0000;
+}
+
+/* Total */
+.total {
+  text-align: right;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+/* Botón volver */
+.volver {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+  color: white;
+  background: #333;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.volver:hover {
+  background: #000;
+}
+
+/* Carrito 
+.item-carrito {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #eff3ef;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+  */
+
+.img-producto {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.info h4 {
+  margin: 0;
+}
+
+.info p {
+  margin: 2px 0;
+}
+
+.badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  font-size: 10px !important;
+  font-weight: bold !important;
+  color: white !important; /* Por si acaso se puso negro */
+  line-height: 1 !important;
+  padding: 2px !important;
+}
+
+/* Aseguramos que el contenedor del carrito no lo corte */
+.nav-link.position-relative {
+  overflow: visible !important;
 }

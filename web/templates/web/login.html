@@ -10,14 +10,19 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
   </head>
 
-  <body>
+  <body class="bg-light">
+    <
     <!-- NAVBAR -->
-
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Tienda Coldplay</a>
+        <a class="navbar-brand" href="{% url 'inicio' %}">Tienda Coldplay</a>
 
         <button
           class="navbar-toggler"
@@ -29,9 +34,12 @@
         </button>
 
         <div class="collapse navbar-collapse" id="menu">
-          <ul class="navbar-nav ms-auto">
+          <!-- IZQUIERDA -->
+          <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="#">Inicio</a>
+              <a class="nav-link" href="{% url 'inicio' %}">
+                <i class="bi bi-house"></i> Inicio
+              </a>
             </li>
 
             <li class="nav-item dropdown">
@@ -40,48 +48,199 @@
                 href="#"
                 data-bs-toggle="dropdown"
               >
-                Productos
+                <i class="bi bi-bag"></i> Productos
               </a>
 
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Poleras</a></li>
-
-                <li><a class="dropdown-item" href="#">Polerones</a></li>
-
-                <li><a class="dropdown-item" href="#">Accesorios</a></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'poleras' %}"
+                    >Poleras</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'polerones' %}"
+                    >Polerones</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'accesorios' %}"
+                    >Accesorios</a
+                  >
+                </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'login' %}">Login</a>
-            </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+              <a class="nav-link" href="{% url 'contacto' %}">
+                <i class="bi bi-envelope"></i> Bibliografia
+              </a>
             </li>
+          </ul>
+
+          <!-- DERECHA -->
+          <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+
+            <!-- CARRITO CON ICONO -->
+            <li class="nav-item">
+              <a
+                class="nav-link position-relative"
+                href="{% url 'ver_carrito' %}"
+              >
+                <i class="bi bi-cart text-danger"></i>
+
+                <span
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >
+                  {{ cantidad_carrito }}
+                </span>
+              </a>
+            </li>
+
+            <!-- DROPDOWN USUARIO -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle text-success"
+                href="#"
+                data-bs-toggle="dropdown"
+              >
+                <i class="bi bi-person-circle"></i> {{ user.username }}
+              </a>
+
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="{% url 'ver_perfil' %}">
+                    <i class="bi bi-person"></i> Mi perfil
+                  </a>
+                </li>
+
+                <li><hr class="dropdown-divider" /></li>
+
+                <li>
+                  <a
+                    class="dropdown-item text-danger"
+                    href="{% url 'logout' %}"
+                  >
+                    <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            {% else %}
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">
+                <i class="bi bi-person"></i> Login
+              </a>
+            </li>
+
+            {% endif %}
           </ul>
         </div>
       </div>
     </nav>
+
     <div class="container mt-5">
-      <h2>Iniciar Sesión</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-5">
+          <div class="card p-4">
+            <!-- 🔘 BOTONES -->
+            <div class="text-center mb-3">
+              <button onclick="mostrarLogin()" class="btn btn-dark btn-sm">
+                Login
+              </button>
+              <button
+                onclick="mostrarRegistro()"
+                class="btn btn-success btn-sm"
+              >
+                Registro
+              </button>
+            </div>
 
-      <div class="card p-4">
-        <form method="POST">
-          {% csrf_token %}
+            <!-- 🟢 LOGIN -->
+            <div id="loginForm">
+              <h3 class="text-center">Iniciar sesión</h3>
 
-          <div class="mb-3">
-            <label>Usuario</label>
-            <input type="text" name="username" class="form-control" />
+              <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="tipo" value="login" />
+
+                <input
+                  class="form-control mb-2"
+                  name="username"
+                  placeholder="Usuario"
+                />
+                <input
+                  class="form-control mb-2"
+                  type="password"
+                  name="password"
+                  placeholder="Contraseña"
+                />
+
+                <button class="btn btn-dark w-100">Ingresar</button>
+              </form>
+            </div>
+
+            <!-- 🟢 REGISTRO (OCULTO) -->
+            <div id="registroForm" style="display: none">
+              <h3 class="text-center">Registrarse</h3>
+
+              <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="tipo" value="registro" />
+
+                <input
+                  class="form-control mb-2"
+                  name="username"
+                  placeholder="Usuario"
+                />
+                <input
+                  class="form-control mb-2"
+                  name="email"
+                  placeholder="Correo"
+                />
+                <input
+                  class="form-control mb-2"
+                  type="password"
+                  name="password"
+                  placeholder="Contraseña"
+                />
+
+                <input
+                  class="form-control mb-2"
+                  type="password"
+                  name="password2"
+                  placeholder="Confirmar contraseña"
+                />
+
+                <button class="btn btn-success w-100">Registrarse</button>
+              </form>
+            </div>
           </div>
-
-          <div class="mb-3">
-            <label>Contraseña</label>
-            <input type="password" name="password" class="form-control" />
-          </div>
-
-          <button class="btn btn-dark">Entrar</button>
-        </form>
+        </div>
       </div>
     </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center mt-4 p-3 bg-dark text-white">
+      <p>Tienda Coldplay | Proyecto Django</p>
+    </footer>
+
+    <!-- JS -->
+    <script>
+      function mostrarLogin() {
+        document.getElementById("loginForm").style.display = "block";
+        document.getElementById("registroForm").style.display = "none";
+      }
+
+      function mostrarRegistro() {
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementById("registroForm").style.display = "block";
+      }
+    </script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

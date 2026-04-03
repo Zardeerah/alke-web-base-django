@@ -3,8 +3,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tienda Coldplay - Oficial</title>
+    <title>Polerones - Tienda Coldplay</title>
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -14,52 +13,53 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="{% static 'web/css/estilos.css' %}" />
 
     <style>
-      /* Estilo del Hero Unificado */
-      .hero-main {
+      /* FONDO OSCURO PARA QUE RESALTE EL ESTILO */
+      body {
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        min-height: 100vh;
+        color: white;
+      }
+
+      /* HERO CON ACENTO AMARILLO (YELLOW) */
+      .hero-polerones {
         background:
           linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
-          url("https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&q=80&w=1200");
+          url("https://images.unsplash.com/photo-1459749411177-0421800673e6?auto=format&fit=crop&q=80&w=1200");
         background-size: cover;
         background-position: center;
-        padding: 120px 0;
-        color: white;
+        padding: 80px 0;
         text-align: center;
-        border-bottom: 4px solid #7928ca; /* Tono morado de tu gradiente */
+        border-bottom: 4px solid #ffc107; /* Amarillo Coldplay */
       }
 
-      .hero-main h1 {
-        font-size: 4rem;
-        font-weight: 900;
-        letter-spacing: 8px;
-        text-shadow: 0 0 20px rgba(121, 40, 202, 0.8);
-        margin-bottom: 10px;
-      }
-
-      /* Efecto de Vidrio para las Tarjetas */
+      /* TARJETAS EFECTO CRISTAL (GLASSMORPHISM) */
       .card-glass {
         background: rgba(255, 255, 255, 0.05) !important;
-        backdrop-filter: blur(15px);
+        backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        color: white;
-        transition: 0.4s;
+        color: white !important;
+        transition:
+          transform 0.3s ease,
+          border-color 0.3s ease;
       }
 
       .card-glass:hover {
         transform: translateY(-10px);
-        background: rgba(255, 255, 255, 0.1) !important;
-        border-color: #2afadf !important;
+        border-color: #ffc107 !important;
+      }
+
+      .text-yellow-lp {
+        color: #ffc107;
+        font-weight: bold;
       }
     </style>
   </head>
 
   <body>
-    <nav
-      class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm"
-    >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
       <div class="container">
         <a class="navbar-brand fw-bold" href="{% url 'inicio' %}"
           >Tienda Coldplay</a
@@ -76,13 +76,13 @@
         <div class="collapse navbar-collapse" id="menu">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="{% url 'inicio' %}"
+              <a class="nav-link" href="{% url 'inicio' %}"
                 ><i class="bi bi-house"></i> Inicio</a
               >
             </li>
             <li class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle"
+                class="nav-link dropdown-toggle active"
                 href="#"
                 data-bs-toggle="dropdown"
                 ><i class="bi bi-bag"></i> Productos</a
@@ -119,7 +119,7 @@
                 class="nav-link position-relative me-3"
                 href="{% url 'ver_carrito' %}"
               >
-                <i class="bi bi-cart text-danger fs-5"></i>
+                <i class="bi bi-cart text-danger"></i>
                 <span
                   class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                 >
@@ -140,20 +140,12 @@
                   <a class="dropdown-item" href="{% url 'ver_perfil' %}"
                     >Mi perfil</a
                   >
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
+
                   <a class="dropdown-item text-danger" href="{% url 'logout' %}"
                     >Cerrar sesión</a
                   >
                 </li>
               </ul>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'login' %}"
-                ><i class="bi bi-person"></i> Login</a
-              >
             </li>
             {% endif %}
           </ul>
@@ -161,36 +153,28 @@
       </div>
     </nav>
 
-    <header class="hero-main">
+    <header class="hero-polerones">
       <div class="container">
-        <h1 class="display-1 fw-bold">COLDPLAY</h1>
-        <p class="lead fw-bold" style="color: #2afadf">
-          MERCHANDISING OFICIAL 2026
-        </p>
-        <div class="mt-4">
-          <span class="badge rounded-pill bg-danger px-4 py-2 shadow"
-            >NEW DROPS</span
-          >
-        </div>
+        <h1 class="display-3 fw-bold">POLERONES</h1>
+        <p class="lead text-yellow-lp">Colección "Higher Power" & Streetwear</p>
       </div>
     </header>
 
     <div class="container mt-5 mb-5">
-      <h2 class="text-center text-white mb-5 fw-light">Explora la Colección</h2>
       <div class="row">
         {% for producto in productos %}
         <div class="col-md-4 mb-4">
-          <div class="card card-glass h-100">
+          <div class="card card-glass h-100 shadow-lg">
             {% if producto.imagen %}
             <img
               src="{{ producto.imagen.url }}"
               class="card-img-top"
-              style="height: 280px; object-fit: cover; opacity: 0.9"
+              style="height: 300px; object-fit: cover; opacity: 0.9"
             />
             {% else %}
             <div
               style="
-                height: 280px;
+                height: 300px;
                 background: rgba(0, 0, 0, 0.2);
                 display: flex;
                 align-items: center;
@@ -203,22 +187,24 @@
 
             <div class="card-body text-center d-flex flex-column">
               <h5 class="fw-bold">{{ producto.nombre }}</h5>
-              <p class="fs-4 fw-bold text-info">$ {{ producto.precio }}</p>
-              <p class="small opacity-50">Disponibles: {{ producto.stock }}</p>
+              <p class="small opacity-75">
+                {{ producto.descripcion|truncatewords:8 }}
+              </p>
+              <p class="fs-4 fw-bold text-yellow-lp mt-auto">
+                $ {{ producto.precio }}
+              </p>
+              <p class="small">Stock: {{ producto.stock }}</p>
 
-              <div class="mt-auto pt-3">
+              <div class="mt-3">
                 {% if producto.stock > 0 %}
                 <a
                   href="{% url 'agregar_carrito' producto.id %}"
-                  class="btn btn-outline-light rounded-pill w-100 fw-bold"
+                  class="btn btn-outline-warning fw-bold w-100 rounded-pill"
                 >
-                  <i class="bi bi-cart-plus"></i> Añadir al Carrito
+                  <i class="bi bi-cart-plus"></i> Agregar
                 </a>
                 {% else %}
-                <button
-                  class="btn btn-outline-secondary rounded-pill w-100"
-                  disabled
-                >
+                <button class="btn btn-secondary w-100 rounded-pill" disabled>
                   Agotado
                 </button>
                 {% endif %}
@@ -227,20 +213,17 @@
           </div>
         </div>
         {% empty %}
-        <div class="col-12 text-center text-white py-5">
-          <p class="lead">No hay productos disponibles en este momento.</p>
+        <div class="col-12 text-center py-5">
+          <h3 class="text-white-50">No hay polerones disponibles.</h3>
         </div>
         {% endfor %}
       </div>
     </div>
 
     <footer
-      class="text-center py-5 bg-dark text-white-50 border-top border-secondary"
+      class="text-center py-4 bg-dark text-white-50 border-top border-secondary"
     >
-      <div class="container">
-        <p class="mb-0">Tienda Coldplay | Music of the Spheres World Tour</p>
-        <small>Proyecto Django 2026</small>
-      </div>
+      <p class="mb-0">Tienda Coldplay | Merchandising Oficial 2024</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
